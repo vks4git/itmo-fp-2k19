@@ -5,11 +5,10 @@ module FP.Task2.Util
     distance
   ) where
 
-import           Control.Lens    (over, (&))
 import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as M
 import           Data.Maybe      (fromJust, fromMaybe)
-import           FP.Task2.Type   (DijkstraState (..), Graph, stDist, stVisited)
+import           FP.Task2.Type   (DijkstraState (..), Graph)
 
 distance :: Graph -> String -> String -> Maybe Integer
 distance graph u v = dist v resultingDistances
@@ -19,19 +18,20 @@ distance graph u v = dist v resultingDistances
     initialState     = DijkstraState initialDistances initialVisited
 
     finalState = dijkstraAlgorithm graph initialState
-    resultingDistances = _stDist finalState
+    resultingDistances = stDist finalState
 
 dijkstraAlgorithm :: Graph -> DijkstraState -> DijkstraState
 dijkstraAlgorithm graph ds@DijkstraState {..} | null keys = ds
                                               | otherwise = dijkstraAlgorithm graph newState
   where
-    keys     = filter (not . visited _stVisited) $ M.keys _stDist
+    keys     = filter (not . visited stVisited) $ M.keys stDist
     newState = foldl (dijkstraIteration graph) ds keys
 
 dijkstraIteration :: Graph -> DijkstraState -> String -> DijkstraState
-dijkstraIteration graph ds v | visited (_stVisited ds) v = ds
-                             | otherwise = ds & over stVisited (visit v)
-                                         . over stDist updateDist
+dijkstraIteration graph ds v | visited (stVisited ds) v = ds
+                             | otherwise = ds { stVisited = visit v (stVisited ds)
+                                              , stDist    = updateDist (stDist ds)
+                                              }
   where
     incident = graph v
 

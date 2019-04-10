@@ -1,10 +1,9 @@
-import           Data.Char          (ord)
-import qualified Data.IntMap.Strict as M
-import           Data.List          (delete, sort)
-import           Data.Map.Strict    (fromList, (!))
-import           FP.Task1           (Dictionary, empty, foldd, get, put, remove)
-import           FP.Task1.Type      (Trie (..))
-import           FP.Task2           (Graph, distance)
+import           Data.List       (delete, sort)
+import           Data.Map.Strict (fromList, (!))
+import qualified Data.Map.Strict as M
+import           FP.Task1        (Dictionary, empty, foldd, get, put, remove)
+import           FP.Task1.Type   (Trie (..))
+import           FP.Task2        (Graph, distance)
 import           Test.Hspec
 
 main :: IO ()
@@ -51,10 +50,10 @@ testDictWoFortalesa = mkDict $ delete "fortalesa" wordList
 -- | Dictionary with key "flag" and its value "flag value"
 --
 dictWithFlag :: Dictionary
-dictWithFlag = Node Nothing (M.fromList [(ord 'f',
-                 Node Nothing (M.fromList [(ord 'l',
-                   Node Nothing (M.fromList [(ord 'a',
-                     Node Nothing (M.fromList [(ord 'g',
+dictWithFlag = Node Nothing (fromList [('f',
+                 Node Nothing (fromList [('l',
+                   Node Nothing (fromList [('a',
+                     Node Nothing (fromList [('g',
                        Node (Just "flag value") M.empty)
                                             ])
                                            )])
@@ -64,13 +63,13 @@ dictWithFlag = Node Nothing (M.fromList [(ord 'f',
 -- | Dictionary with records ("flag", "flag value") and ("flux", "flux value")
 --
 dictWithFlagFlux :: Dictionary
-dictWithFlagFlux = Node Nothing (M.fromList [(ord 'f',
-                     Node Nothing (M.fromList [(ord 'l',
-                       Node Nothing (M.fromList [(ord 'a',
-                         Node Nothing (M.fromList [(ord 'g',
+dictWithFlagFlux = Node Nothing (fromList [('f',
+                     Node Nothing (fromList [('l',
+                       Node Nothing (fromList [('a',
+                         Node Nothing (fromList [('g',
                            Node (Just "flag value") M.empty)]))
-                                             , (ord 'u',
-                         Node Nothing (M.fromList [(ord 'x',
+                                             , ('u',
+                         Node Nothing (fromList [('x',
                            Node (Just "flux value") M.empty)
                                                 ])
                                               )])
@@ -80,13 +79,13 @@ dictWithFlagFlux = Node Nothing (M.fromList [(ord 'f',
 -- | Dictionary with records ("flag", "new value") and ("flux", "flux value")
 --
 dictWithFlagFlux' :: Dictionary
-dictWithFlagFlux' = Node Nothing (M.fromList [(ord 'f',
-                      Node Nothing (M.fromList [(ord 'l',
-                        Node Nothing (M.fromList [(ord 'a',
-                          Node Nothing (M.fromList [(ord 'g',
+dictWithFlagFlux' = Node Nothing (fromList [('f',
+                      Node Nothing (fromList [('l',
+                        Node Nothing (fromList [('a',
+                          Node Nothing (fromList [('g',
                             Node (Just "new value") M.empty)]))
-                                              , (ord 'u',
-                          Node Nothing (M.fromList [(ord 'x',
+                                              , ('u',
+                          Node Nothing (fromList [('x',
                             Node (Just "flux value") M.empty)
                                                  ])
                                                )])
