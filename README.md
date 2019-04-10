@@ -1,17 +1,18 @@
 # itmo-fp-2k19
 Homework in FP spring course. If it compiles, it works!
 
-## Building
+## Сборка 
 
-You'll need [stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/) to build this project.
+Вам понадобится [stack](https://docs.haskellstack.org/en/stable/install_and_upgrade/), чтобы собрать этот проект.
 
 ```bash
 stack build --pedantic
 ```
 
-If you do not have `stack` or do not want to install it, you may use `ghci` and load the tasks there.
+## Тестирование
+
+Тесты к функциям находятся в файле [Spec.hs](test/Spec.hs). Для их запуска используйте `stack`:
 
 ```bash
-cd src/FP/ 
-ghci Task1.hs
+stack test
 ```

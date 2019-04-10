@@ -24,6 +24,9 @@ dependencies:
 
 library:
   source-dirs: src
+  dependencies:
+    - containers
+    - lens
 
 tests:
   itmo-fp-2k19-test:
@@ -35,3 +38,5 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - itmo-fp-2k19
+    - containers 
+    - hspec
