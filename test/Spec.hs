@@ -1,6 +1,7 @@
 import           Data.List       (delete, sort)
 import           Data.Map.Strict (fromList, (!))
 import qualified Data.Map.Strict as M
+import           Data.Maybe      (fromMaybe)
 import           FP.Task1        (Dictionary, empty, foldd, get, put, remove)
 import           FP.Task1.Type   (Trie (..))
 import           FP.Task2        (Graph, distance)
@@ -124,6 +125,8 @@ task2tests = do
     it "Connected vertices"   $ distance graph2 "v1" "v7" `shouldBe` Just 7
     it "Connected vertices"   $ distance graph2 "v8" "v9" `shouldBe` Just 5
     it "Unreachable vertices" $ distance graph2 "v6" "v8" `shouldBe` Nothing
+  describe "Bug fix" $
+    it "A-D distance" $ distance graph3 "A" "D" `shouldBe` Just 5
 
 
 graph1 :: Graph
@@ -132,8 +135,11 @@ graph1 = mkGraph edges1
 graph2 :: Graph
 graph2 = mkGraph edges2
 
+graph3 :: Graph
+graph3 = mkGraph edges3
+
 mkGraph :: [(String, [(String, Integer)])] -> Graph
-mkGraph incList = (fromList incList !)
+mkGraph incList = fromMaybe [] . (`M.lookup` fromList incList)
 
 
 -- v1 --2-- v2 --4-- v3
@@ -181,3 +187,10 @@ edges2 = [ ("v1", [("v2", 2), ("v6", 3)])
          , ("v9", [("v5", 3), ("v8", 7)])
          ]
 
+edges3 :: [(String, [(String, Integer)])]
+edges3 = [ ("A", [("B", 1), ("E", 3)])
+         , ("B", [("C", 4), ("E", 1)])
+         , ("C", [("D", 1)])
+         , ("E", [("F", 1), ("C", 3)])
+         , ("F", [("C", 1), ("D", 4)])
+         ]

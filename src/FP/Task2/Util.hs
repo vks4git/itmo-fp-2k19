@@ -5,6 +5,7 @@ module FP.Task2.Util
     distance
   ) where
 
+import           Data.List       (sortOn)
 import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as M
 import           Data.Maybe      (fromJust, fromMaybe)
@@ -24,7 +25,7 @@ dijkstraAlgorithm :: Graph -> DijkstraState -> DijkstraState
 dijkstraAlgorithm graph ds@DijkstraState {..} | null keys = ds
                                               | otherwise = dijkstraAlgorithm graph newState
   where
-    keys     = filter (not . visited stVisited) $ M.keys stDist
+    keys     = filter (not . visited stVisited) . fmap fst . sortOn snd $ M.assocs stDist
     newState = foldl (dijkstraIteration graph) ds keys
 
 dijkstraIteration :: Graph -> DijkstraState -> String -> DijkstraState
